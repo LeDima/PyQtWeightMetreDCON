@@ -3,5 +3,5 @@
   "ICPCONAdres": "01",
   "SerialTimeout": 0.1,
   "SerialSpeed": 9600,
-  "PeriodDate": 500
+  "PeriodDate": 2000
 }
