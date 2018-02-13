@@ -63,12 +63,12 @@ class MyThread(QtCore.QThread):
                         self.Vsup_average=self.dataFloat[5] # Назначить среденее значение питающего напряжения первым считаным значением 
                         self.first=0
                     else:
-                        if self.dataFloat[0]>self.Date_average*1.5: # Отбрасывание значений превышаюших среднее в 1,5раз фильтр помех 
+                        if (self.dataFloat[0]>self.Date_average*1.3)|(self.dataFloat[0]<self.Date_average*0.7) : # Отбрасывание значений превышаюших среднее в 1,5раз фильтр помех 
                             pass
                         else:
                             self.Date_average=self.Date_average + (self.dataFloat[0] - self.Date_average) / 20.0 # Расчет среднего значения по двацати прошлым значениям  
                         
-                        if self.dataFloat[5]<self.Date_average*0.9: # Отбрасывание значений питающего напряжения меньше среднего 0,8раз фильтр помех 
+                        if self.dataFloat[5]<self.Vsup_average*0.8: # Отбрасывание значений питающего напряжения меньше среднего 0,8раз фильтр помех 
                             pass
                         else:
                             self.Vsup_average=self.Vsup_average + (self.dataFloat[5] - self.Vsup_average) / 20.0 # Расчет среднего значения питающего напряжения по двацати прошлым значениям  
@@ -350,7 +350,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 #        VINupperX=x_axis[-1:][0]
         
 #        print(VINlowerY,VINlowerY,(VINupperY-VINlowerY)/10,VINlowerX,VINupperX,(VINupperX-VINlowerX)/10)
-        self.axesVIN.set_ybound(lower=min(s['Date'][0][-5000:])-0.01, upper=max(s['Date'][0][-5000:])+0.01)
+        self.axesVIN.set_ybound(lower=min(s['Date'][0][-5000:])-0.02, upper=max(s['Date'][0][-5000:])+0.02)
 #        self.figVIN.autofmt_xdate(rotation=10)
         self.axesVIN.xaxis.set_major_formatter(formatter)
 #        self.axesVIN.set_yticks(np.arange(VINlowerY, VINupperY, round(((VINupperY-VINlowerY)/10),3)))
